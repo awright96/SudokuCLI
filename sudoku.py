@@ -60,7 +60,7 @@ class Sudoku:
             self.draw_subboard(offset[0], offset[1])
 
         if len(self.solutions) != 0:
-            self.draw_state(state=self.solutions[self.n - 1], color=curses.color_pair(2) | curses.A_REVERSE, refresh=False)
+            self.draw_state(state=self.solutions[self.n - 1], color=curses.color_pair(2), refresh=False)
         self.draw_state(state=self.state, refresh=False)
 
         self.win.refresh()
@@ -133,7 +133,7 @@ class Sudoku:
         prob.writeLP("Sudoku.lp")
 
         # The problem is solved using PuLP's choice of Solver
-        prob.solve(CPLEX(msg=0))
+        prob.solve()
         sol = {}
 
         # The status of the solution is printed to the screen
@@ -205,7 +205,7 @@ def draw_main(stdscr):
         cursor_y = min(8, cursor_y)
 
         # Declaration of strings
-        statusbarstr = "Press 'q' to exit | STATUS BAR | Pos: {}, {}".format(cursor_x, cursor_y)
+        statusbarstr = "Press 'q' to exit | Press 's' to solve | Pos: {}, {}".format(cursor_x + 1, cursor_y + 1)
 
         # Render status bar
         stdscr.attron(curses.color_pair(3))
